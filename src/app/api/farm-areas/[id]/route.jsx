@@ -6,6 +6,7 @@ import Reading from '@/models/Reading';
 import User from '@/models/User';
 import { subDays } from 'date-fns';
 import mongoose from 'mongoose';
+import { use } from 'react';
 
 export async function GET(request, { params }) {
   try {
@@ -45,9 +46,9 @@ export async function GET(request, { params }) {
         { status: 404 }
       );
     }
-
+    const awaited_params = await params
     const farmArea = await FarmArea.findOne({
-      _id: new mongoose.Types.ObjectId(params.id),
+      _id: new mongoose.Types.ObjectId(awaited_params.id),
       userId: user._id,
     });
 
@@ -58,14 +59,8 @@ export async function GET(request, { params }) {
       );
     }
 
-    const readings = await Reading.find({
-      farmAreaId: new mongoose.Types.ObjectId(params.id),
-      timestamp: {
-        $gte: startDate,
-      },
-    }).sort({ timestamp: 1 });
 
-    return NextResponse.json(readings);
+    return NextResponse.json(farmArea);
   } catch (error) {
     console.error('Error fetching readings:', error);
     return NextResponse.json(

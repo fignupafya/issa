@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import capitalize from '@/lib/capitalize';
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
@@ -44,7 +45,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="pt-16 min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="flex justify-between items-center mb-6">
@@ -64,7 +65,7 @@ export default function DashboardPage() {
                 className="bg-gray-800 rounded-lg shadow-lg p-6"
               >
                 <h2 className="text-xl font-semibold text-white mb-2">
-                  {farmArea.name}
+                  {capitalize(farmArea.name)}
                 </h2>
                 <p className="text-gray-400 mb-4">
                   API Key: {farmArea.apiKey}
